@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Cybersecurity Dashboard</title>
+<link rel="stylesheet" href="/static/style.css">
+<meta http-equiv="refresh" content="5">
+</head>
+
+<body>
+
+<div class="topbar">
+<h1>🛡 Hybrid AI-Based IDPS Dashboard</h1>
+<div class="clock" id="clock"></div>
+</div>
+
+<div class="cards">
+
+<div class="card glow-green">
+<h3>Status</h3>
+<p>🟢 ACTIVE</p>
+</div>
+
+<div class="card glow-blue">
+<h3>System IP</h3>
+<p>{{ ip }}</p>
+</div>
+
+<div class="card glow-red">
+<h3>Total Threats</h3>
+<p>{{ threat_count }}</p>
+</div>
+
+<div class="card glow-purple">
+<h3>Blocked IPs</h3>
+<p>{{ threat_count }}</p>
+</div>
+
+</div>
+
+<div class="alert-banner">
+🚨 LIVE INTRUSION MONITORING ENABLED 🚨
+</div>
+
+<div class="main-grid">
+
+<div class="table-box">
+
+<h2>⚠️ Latest Threat Logs</h2>
+
+<table>
+<tr>
+<th>Timestamp</th>
+<th>IP Address</th>
+<th>Threat</th>
+</tr>
+
+{% for row in logs %}
+<tr>
+<td>{{ row.Timestamp }}</td>
+<td>{{ row.IP }}</td>
+
+<td class="
+{% if row['Threat Level'] == 'CRITICAL' %}
+critical
+{% elif row['Threat Level'] == 'HIGH' %}
+high
+{% else %}
+medium
+{% endif %}
+">
+{{ row["Threat Level"] }}
+</td>
+
+</tr>
+{% endfor %}
+
+</table>
+
+</div>
+
+<div class="side-panel">
+
+<div class="metric-card">🎯 Accuracy<br><span>{{ metrics.accuracy }}</span></div>
+<div class="metric-card">🎯 Precision<br><span>{{ metrics.precision }}</span></div>
+<div class="metric-card">🎯 Recall<br><span>{{ metrics.recall }}</span></div>
+<div class="metric-card">🎯 F1 Score<br><span>{{ metrics.f1 }}</span></div>
+
+<a href="/run_nmap">
+<button class="scan-btn">⚡ Run Nmap Scan</button>
+</a>
+
+</div>
+
+</div>
+
+<div class="graph-box">
+<h2>📊 Confusion Matrix</h2>
+<img src="/static/confusion_matrix.png" width="500">
+</div>
+
+<div class="footer">
+Developed by Sayee • Shreepriya • Shilpi
+</div>
+
+<script>
+function updateClock(){
+let now = new Date();
+document.getElementById("clock").innerHTML = now.toLocaleTimeString();
+}
+setInterval(updateClock,1000);
+updateClock();
+</script>
+
+</body>
+</html>
